@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+  xmlns:ns1="http://xmlns.com/foaf/0.1/"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <ns1:Person rdf:about="http://example.org/people/Bob">
+    <ns1:name>Bob</ns1:name>
+    <ns1:knows>
+      <ns1:Person rdf:nodeID="Na163a8037b704f75a22641a6713799ad">
+        <ns1:name>Linda</ns1:name>
+      </ns1:Person>
+    </ns1:knows>
+  </ns1:Person>
+</rdf:RDF>
