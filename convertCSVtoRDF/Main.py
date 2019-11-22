@@ -83,7 +83,7 @@ def createRDF(list_of_notaries, list_of_translators):
     gg.add((notaryClass, RDF.type, FOAF.Person))
     gg.add((translatorClass, RDF.type, FOAF.Person))
 
-    for i in range(len(list_of_notaries)):
+    for i in range(10):
         notary = list_of_notaries[i]
         identificator = str(notary["firstName"] +"_"+ notary["lastName"]).replace(" ","_")
         # print(identificator)
@@ -100,11 +100,13 @@ def createRDF(list_of_notaries, list_of_translators):
         #TO DO DOCUMENTS
 
 
-    for i in range(len(list_of_translators)):
+    for i in range(10):
         translator = list_of_translators[i]
         identificator = str(translator["firstName"] + "_" + translator["lastName"]).replace(" ", "_")
-        print(identificator)
+        #print(identificator)
+        print(translator["languages"])
         address = URIRef("https://address.org/id/" + translator["court_of_appeal"].replace(" ", "_"))
+        language = URIRef("https://en.wikipedia.org/wiki/Language"+identificator)
         person = URIRef("http://example.org/people/" + identificator)
         gg.add((person, RDF.type, translatorClass))
         gg.add((person, FOAF.firstName, Literal(translator["firstName"])))
@@ -113,6 +115,7 @@ def createRDF(list_of_notaries, list_of_translators):
         gg.add((address, FOAF.county, Literal(translator["county"])))
         gg.add((address, FOAF.city, Literal(translator["court_of_appeal"])))
         gg.add((person, FOAF.address, address))
+        gg.add((person, FOAF.languages, Literal(translator["languages"])))
 
     file2 = open("output2.txt", "wb")
     file2.write(gg.serialize(format='pretty-xml'))
