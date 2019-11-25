@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://w3c.github.io/scholarly-html/ -->
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Scholarly HTML</title>
+    <link rel="stylesheet" href="./Scholarly HTML_files/scholarly.min.css">
+    <script src="./Scholarly HTML_files/scholarly.min.js.download"></script>
+</head>
+
+<body prefix="schema: http://schema.org">
+    <header style="
+    width: 700px;
+    height: 100px;
+    padding-bottom: 50px;
+">
+        <h1 style="
+    padding-top: 50px;
+">Technical Report</h1>
+    </header>
+    <div role="contentinfo">
+        <ol role="directory">
+            <li><a href="#"><span>1. </span>Abstract</a></li>
+            <li><a href="#"><span>2. </span>Introduction and objectives</a></li>
+            <li><a href="#"><span>3. </span>Application Architecture</a>
+                <ol role="directory">
+                    <li><a href="#"><span>3.1 </span>Server</a></li>
+                    <li><a href="#"><span>3.2 </span>Client</a></li>
+                </ol>
+            </li>
+            <li><a href="#"><span>4. </span>RDF structure</a>
+            </li>
+            <li><a href="#"><span>. </span>References</a></li>
+        </ol>
+    </div>
+    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
+        <h2><span>1. </span>Abstract</h2>
+        <p>
+            In this report we have highlighted the stages of the current project development, its description, the technologies used and the challenges encountered. Finally, we presented some conclusions and future improvements for our application.
+        </p>
+    </section>
+    <section id="introduction" role="doc-introduction">
+        <!-- review? -->
+        <h2><span>2. </span>Introduction and objectives</h2>
+        <p>
+            Notis is a web application that offers the possibility to search for different entities as notaries and translators based on different searching criterias such as: proximity, type of documents that can be released, etc.
+        </p>
+        <p>
+            The application offer real-time locations on map (provided by Google Maps) on which we can indentify the user location or actual positions of the offices and estimates the time needed to travel to the desired destination using different types of transport (personal vehicle, bicycle, public transport, walking).
+        </p>
+        <p>
+            For each type of entity we display informations regarding the documents that can be released, their prices and general contact informations such as: telephone number and email address. Also, we can check which are the additional documents we need to provide and we can download templates for them in order to complete them and to not waste any precious time.
+        </p>
+
+    </section>
+    <section id="application-architecture">
+        <h2><span>3. </span>Application Architecture</h2>
+        <p>
+            Application architecture is separated in two main components consisting of: the server application and the client application. In the image below we can visualize the main architecture.
+        </p>
+        <img src="../UML/arhitecture.png" alt="architecture" />
+        <section id="server">
+            <h3><span>3.1 </span>Server</h3>
+            <p> The server application is written in Java. In Java we do all the processing that the application requires. Regarding technologies we are using: Spring Boot, Maven and Apache Jena.</p>
+            <p>Maven is used in order to resolve all imports of dependecies required for the project.</p>
+            <p>Spring Boot is used to accelerate and facilitate back-end application development. With the help of Spring we create a microservice which helps in processing of data necessary for client, through endpoints. There is an OpenAPI document that contains the main endpoints offered by our server can be found <a href="./openApi.html">here</a>.
+            </p>
+            <p>We made use of Apache Jena framework to manipulate the RDF model and to interogate it via SPARQL. The rdf structure will be described in the next chapter.</p>
+            <p>For a better structure of a code, as design pattern we use MVC pattern where we split the code in three main parts: </p>
+            <ul>
+                <li>M-Model: for defini</li>
+                <li>Tea</li>
+                <li>Milk</li>
+            </ul>
+        </section>
+        <section id="client">
+            <!-- review? -->
+            <h3><span>3.2 </span>Client</h3>
+            <p>The client web application is developed using Angular framework and runs on a NodeJS server.
+            </p>
+            <p>In order to use a proper map on which the users can see the actual position of different offices across the country we made use of Google Maps API. The official documentation of this API can be consulted <a href="https://developers.google.com/maps/documentation">here</a>.
+            </p>
+            <p><br />Communication between server and client is made via HTTP requests.</p>
+
+        </section>
+    </section>
+    <section id="rdf-structure">
+        <!-- review? -->
+        <h2><span>4. </span>RDF structure</h2>
+        <p>RDF was generated using rdflib Python library. Data was provided in two excel documents and a Python script was used to filter the data, add missing information and to create a rdf document in the rdf/XML format.
+        </p>
+        <p>The rdf contains two types of entities: Notary and Translator. Both entities are of type person. Their structure are very similar, only some minor differences are present. We can check the syntax for both entities below.
+        </p>
+          <figure typeof="schema:SoftwareSourceCode" resource="#person-example" id="person-example">
+          <pre><code>
+              &lt;ns1:notary rdf:about="http://example.org/people/MARIA_CREŢOI-DAVID"&gt;
+                &lt;ns2:lastName&gt;CREŢOI&lt;/ns2:lastName&gt;
+                &lt;ns2:address&gt;
+                  &lt;rdf:Description rdf:about="https://address.org/id/JIBOU"&gt;
+                    &lt;ns2:street&gt;STR. AVRAM IANCU NR. 2, BL. G11, AP. 2&lt;/ns2:street&gt;
+                    &lt;ns2:county&gt;SĂLAJ&lt;/ns2:county&gt;
+                    &lt;ns2:city&gt;JIBOU&lt;/ns2:city&gt;
+                  &lt;/rdf:Description&gt;
+                &lt;/ns2:address&gt;
+                &lt;ns2:firstName&gt;MARIA&lt;/ns2:firstName&gt;
+                &lt;ns2:phoneNo&gt;0705788213&lt;/ns2:phoneNo&gt;
+              &lt;/ns1:notary&gt;
+          </code></pre>
+          <figcaption>
+            <span property="schema:name"></span>
+            <span property="schema:description">
+              Example of a Notary.
+            </span>
+          </figcaption>
+        </figure>
+        <figure typeof="schema:SoftwareSourceCode" resource="#person-example" id="person-example">
+          <pre><code>
+              &lt;ns1:notary rdf:about="http://example.org/people/MARIA_CREŢOI-DAVID"&gt;
+                &lt;ns2:lastName&gt;CREŢOI&lt;/ns2:lastName&gt;
+                &lt;ns2:address&gt;
+                  &lt;rdf:Description rdf:about="https://address.org/id/JIBOU"&gt;
+                    &lt;ns2:street&gt;STR. AVRAM IANCU NR. 2, BL. G11, AP. 2&lt;/ns2:street&gt;
+                    &lt;ns2:county&gt;SĂLAJ&lt;/ns2:county&gt;
+                    &lt;ns2:city&gt;JIBOU&lt;/ns2:city&gt;
+                  &lt;/rdf:Description&gt;
+                &lt;/ns2:address&gt;
+                &lt;ns2:firstName&gt;MARIA&lt;/ns2:firstName&gt;
+                &lt;ns2:phoneNo&gt;0705788213&lt;/ns2:phoneNo&gt;
+              &lt;/ns1:notary&gt;
+          </code></pre>
+          <figcaption>
+            <span property="schema:name"></span>
+            <span property="schema:description">
+              Example of a Translator. TO DO -- change xml 
+            </span>
+          </figcaption>
+        </figure>
+    </section>
+    <section id="biblio-references">
+        <h2><span>. </span>References</h2>
+        <dl>
+            <dt id="ref-HTML">Scholarly HTML</dt>
+            <dd property="schema:citation" typeof="schema:ScholarlyArticle" resource="https://w3c.github.io/scholarly-html/">
+                <cite property="schema:name"><a href="https://w3c.github.io/scholarly-html/">Scholarly HTML</a></cite>.
+            </dd>
+        </dl>
+    </section>
+</body></html>
